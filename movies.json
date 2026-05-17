@@ -1,0 +1,23 @@
+[
+  {
+    "Title": "The Shawshank Redemption",
+    "Year": 1994,
+    "Genre": "Drama",
+    "Rating": 10,
+    "Review": "One of the greatest films ever made. Hope is a powerful thing."
+  },
+  {
+    "Title": "The Dark Knight",
+    "Year": 2008,
+    "Genre": "Action",
+    "Rating": 9,
+    "Review": "Ledger's Joker is untouchable. Nolan at his peak."
+  },
+  {
+    "Title": "Hereditary",
+    "Year": 2018,
+    "Genre": "Horror",
+    "Rating": 8,
+    "Review": "Deeply unsettling. Toni Collette deserved every award."
+  }
+]

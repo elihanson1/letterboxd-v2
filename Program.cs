@@ -1,23 +1,21 @@
-﻿// Movie rating app based on the actual app Letterboxd.
-// One way to improve this to be fully functional would be to add a storage system
-// for ratings and adding a prompt to call previous ratings stored in a JSON file
+// Movie rating app based on the actual app Letterboxd.
+// V3: Now consumes a movies.json file on startup, iterates over the array
+// of saved movie objects, and displays each one before entering the menu.
 
-
-//This V2 iteration is built off of my console app from last week. This week I added
-//the get ; set functions for each of the aspects of the movie rating, added the get starts class,
-//and did some other clean up of the code to allocate for the new code.
-
-//Making a new repo for this as I'm working on my laptop and not my desktop
+using System.Text.Json;
 
 namespace Letterboxd
 {
     class Movie
     {
-        public string Title { get; set; }
+        public string Title { get; set; } = "";
         public int Year { get; set; }
-        public string Genre { get; set; }
+        public string Genre { get; set; } = "";
         public int Rating { get; set; }
-        public string Review { get; set; }
+        public string Review { get; set; } = "";
+
+        public Movie() { }
+
         public Movie(string title, int year, string genre, int rating, string review)
         {
             Title = title;
@@ -59,6 +57,7 @@ namespace Letterboxd
             Console.WriteLine("========================================");
             Console.WriteLine("               Letterboxd               ");
             Console.WriteLine("========================================\n");
+            LoadSavedMovies();
 
             while (true)
             {
@@ -78,6 +77,36 @@ namespace Letterboxd
                         Console.WriteLine("Enter 0 or 1.\n");
                         break;
                 }
+            }
+        }
+        static void LoadSavedMovies()
+        {
+            string path = "movies.json";
+
+            if (!File.Exists(path))
+            {
+                Console.WriteLine("No saved movies found.\n");
+                return;
+            }
+
+            string json = File.ReadAllText(path);
+
+            List<Movie>? movies = JsonSerializer.Deserialize<List<Movie>>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            if (movies == null || movies.Count == 0)
+            {
+                Console.WriteLine("No saved movies found.\n");
+                return;
+            }
+
+            Console.WriteLine($"--- Your Saved Movies ({movies.Count}) ---");
+
+            foreach (Movie movie in movies)
+            {
+                movie.Display();
             }
         }
 
